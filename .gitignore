@@ -1,0 +1,52 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.python/
+
+# IDE and editor-specific files (for common IDEs/editors)
+.idea/              # PyCharm
+.vscode/            # VSCode
+*.swp               # Vim swap files
+*.swo               # Vim swap files
+*.sublime-project
+*.sublime-workspace
+
+# Distribution and packaging
+*.egg
+*.egg-info/
+dist/
+build/
+*.tar.gz
+*.whl
+*.zip
+
+# Unit test and coverage reports
+.coverage
+.coverage.*
+nosetests.xml
+test-results/
+tox.ini
+*.log
+
+# Python specific files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# MacOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+
+# Other
+citra.py
