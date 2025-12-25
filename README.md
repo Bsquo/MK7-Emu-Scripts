@@ -44,7 +44,9 @@ Boot Mario Kart 7 in the emulator, then open a command line tool, and eexecute t
 
 For example, to run the script `CRaceInfo.py` while playing Mario Kart 7 (USA Rev1, aka USA prepatched v1.1), execute the script in the scripting directory as follows while the game is on:
 
-```python CRaceInfo.py 24``
+```
+python CRaceInfo.py 24
+```
 
 # Scripts
 * `CRaceInfo.py`: Prints global information and parameters for the current race.
