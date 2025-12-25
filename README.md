@@ -5,7 +5,8 @@ This repository contains emulator scripts to help reverse engineering Mario Kart
 ## Installation
 [Install the latest version of Python](https://www.python.org/downloads/).
 
-Then, place the Python scripts from this repository in the scripting directory of the emulator. For Citra, this is the `nightly-mingw/scripting/` directory in your Citra installation folder.
+Then, place the Python scripts from this repository in the scripting directory of the emulator.
+For Citra, this is the `nightly-mingw/scripting/` directory in your Citra installation folder (ensure that the scripts are in the same directory as the `citra.py` file).
 
 ## Usage
 Boot Mario Kart 7 in the emulator, then open a command line tool, and eexecute the scripts as follows:
@@ -43,4 +44,10 @@ Boot Mario Kart 7 in the emulator, then open a command line tool, and eexecute t
 
 For example, to run the script `CRaceInfo.py` while playing Mario Kart 7 (USA Rev1, aka USA prepatched v1.1), execute the script in the scripting directory as follows while the game is on:
 
-`python CRaceInfo.py 24`
+```python CRaceInfo.py 24``
+
+# Scripts
+* `CRaceInfo.py`: Prints global information and parameters for the current race.
+* `LapRankChecker.py`: Prints information on your player's "lap rank" checking information, including variables such as the current checkpoint ID, lap completion, etc.
+
+NOTE: `common.py` is a helper script containing code and data used by the scripts above. This script isn't meant to be executed by the user.
