@@ -141,13 +141,13 @@ def ReadS8(ptr):
 def GetAddress(ptr):
     return ReadU32(ptr)
 
-def ReadVector3CalcCtr(ptr):
+def ReadVector3(ptr):
     x = ReadF32(ptr + 0x00)
     y = ReadF32(ptr + 0x04)
     z = ReadF32(ptr + 0x08)
     return (x, y, z)
 
-def ReadVector2CalcCtr(ptr):
+def ReadVector2(ptr):
     x = ReadF32(ptr + 0x00)
     y = ReadF32(ptr + 0x04)
     return (x, y)
@@ -178,6 +178,22 @@ def GetRaceInfo():
 # Returns a pointer to the current's "LapRankChecker"
 def GetLapRankChecker():
     return GetAddress(GetModeManager() + 0x504)
+
+def GetKartInfoArrayPtr(lapCheckerPtr):
+    # Returns the kartInfoArrayPtr (as an integer address) or 0 if none
+    return GetAddress(lapCheckerPtr + 0x2C)
+
+def GetKartInfoArrayCount(lapCheckerPtr):
+    # Returns the number of KartInfo entries
+    return ReadS32(lapCheckerPtr + 0x28)
+
+def GetKartInfoForPlayer(playerIdx):
+    arrayOffset = playerIdx * 0x44
+    return GetKartInfoArrayPtr(GetLapRankChecker()) + arrayOffset
+
+def GetVehicle(playerIdx):
+    infoProxy = GetAddress(GetKartInfoForPlayer(playerIdx) + 0x00)
+    return GetAddress(infoProxy + 0x00)
 
 ##############################
 

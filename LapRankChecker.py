@@ -1,16 +1,6 @@
 import common
 import sys
 
-def GetKartInfoArrayPtr(lapCheckerPtr):
-    # Returns the kartInfoArrayPtr (as an integer address) or 0 if none
-    kartInfoArrayPtr = common.GetAddress(lapCheckerPtr + 0x2C)
-    return kartInfoArrayPtr
-
-def GetKartInfoArrayCount(lapCheckerPtr):
-    # Returns the number of KartInfo entries
-    kartInfoArrayCount = common.ReadS32(lapCheckerPtr + 0x28)
-    return kartInfoArrayCount
-
 def PrintKartInfo(kartInfo, base_idx):
     # kartInfo is the starting address for this kart's KartInfo structure
     infoProxy = common.GetAddress(kartInfo + 0x00)
@@ -29,8 +19,8 @@ def PrintKartInfo(kartInfo, base_idx):
     kartGridRank = common.ReadU32(kartInfo + 0x20)
     flags = common.ReadU32(kartInfo + 0x24)
 
-    currentPosition = common.ReadVector3CalcCtr(kartInfo + 0x28)
-    previousPosition = common.ReadVector3CalcCtr(kartInfo + 0x34)
+    currentPosition = common.ReadVector3(kartInfo + 0x28)
+    previousPosition = common.ReadVector3(kartInfo + 0x34)
     field17_0x40 = common.ReadU8(kartInfo + 0x40)
     field18_0x41 = common.ReadU8(kartInfo + 0x41)
     field19_0x42 = common.ReadU8(kartInfo + 0x42)
@@ -95,10 +85,10 @@ def PrintLapRankChecker():
     idleTimer2 = common.ReadF32(lapCheckerPtr + 0x24)
     print(f"idleTimer2: {idleTimer2}")
 
-    kartInfoArrayCount = GetKartInfoArrayCount(lapCheckerPtr)
+    kartInfoArrayCount = common.GetKartInfoArrayCount(lapCheckerPtr)
     print(f"kartInfoArrayCount: {kartInfoArrayCount}")
 
-    kartInfoArrayPtr = GetKartInfoArrayPtr(lapCheckerPtr)
+    kartInfoArrayPtr = common.GetKartInfoArrayPtr(lapCheckerPtr)
     print(f"KartInfoArrayPtr: 0x{kartInfoArrayPtr:08X}")
 
     field17_0x30 = common.ReadS32(lapCheckerPtr + 0x30)
@@ -118,7 +108,7 @@ def PrintLapRankChecker():
 
 # Print the kart info associated to a specific player
 def PrintKartInfoForPlayer(playerIdx):
-    PrintKartInfo(GetKartInfoArrayPtr(common.GetLapRankChecker()), playerIdx * 0x44)
+    PrintKartInfo(common.GetKartInfoForPlayer(playerIdx), playerIdx)
 
 # Runs once at script boot
 def mainInit():
