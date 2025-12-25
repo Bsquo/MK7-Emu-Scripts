@@ -26,6 +26,32 @@ def PrintVehicleInfo(playerIdx):
     speedRatio3 = common.ReadF32(vehiclePtr + 0xF38)
     print(f"speedRatio3: {speedRatio3:.5f}")
 
+    currentVehicleMaxSpeed = common.ReadF32(vehiclePtr + 0xF80)
+    print(f"currentVehicleMaxSpeed: {currentVehicleMaxSpeed:.5f}")
+    currentVehicleMaxSpeed2 = common.ReadF32(vehiclePtr + 0xF88)
+    print(f"currentVehicleMaxSpeed2: {currentVehicleMaxSpeed2:.5f}")
+
+    field131_0xd98 = common.ReadF32(vehiclePtr + 0xD98)
+    print(f"field131_0xd98: {field131_0xd98:.5f}")
+    field181_0xe8c = common.ReadF32(vehiclePtr + 0xE8C)
+    print(f"field181_0xe8c: {field181_0xe8c:.5f}")
+    field257_0xfd0 = common.ReadF32(vehiclePtr + 0xFD0)
+    print(f"field257_0xfd0: {field257_0xfd0:.5f}")
+    field258_0xfd4 = common.ReadF32(vehiclePtr + 0xFD4)
+    print(f"field258_0xfd4: {field258_0xfd4:.5f}")
+
+    slipStreamTime = common.ReadS32(vehiclePtr + 0xFD8)
+    print(f"slipStreamTime: {slipStreamTime}")
+
+    currentDashType = common.ReadS32(vehiclePtr + 0xF98)
+    print(f"currentDashType: {currentDashType}")
+    currentDashDuration = common.ReadS32(vehiclePtr + 0xF9C)
+    print(f"currentDashDuration: {currentDashDuration}")
+    boostSpeed = common.ReadF32(vehiclePtr + 0xFC0)
+    print(f"boostSpeed: {boostSpeed:.5f}")
+    dashAcceleration = common.ReadF32(vehiclePtr + 0xFC4)
+    print(f"dashAcceleration: {dashAcceleration:.5f}")
+
 # Runs once at script boot
 def mainInit():
     if len(sys.argv) < 2:
