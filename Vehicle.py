@@ -1,5 +1,6 @@
 import common
 import sys
+import math
 
 def PrintVehicleInfo(playerIdx):
     vehiclePtr = common.GetVehicle(playerIdx)
@@ -12,7 +13,9 @@ def PrintVehicleInfo(playerIdx):
     ### Rigid ###
     positionPtr = common.GetAddress(vehiclePtr + 0x34)
     position = common.ReadVector3(positionPtr)
-    print(f" currentPosition = {position}")
+    print(f"currentPosition = {position}")
+    velocity = common.ReadVector3(vehiclePtr + 0x38)
+    print(f" velocity = {velocity}")
 
     ### VehicleMove ###
     speed = common.ReadF32(vehiclePtr + 0xF2C)
@@ -40,9 +43,18 @@ def PrintVehicleInfo(playerIdx):
     field258_0xfd4 = common.ReadF32(vehiclePtr + 0xFD4)
     print(f"field258_0xfd4: {field258_0xfd4:.5f}")
 
+    collisionType = common.ReadS32(vehiclePtr + 0xD14)
+    print("collisionType: ")
+    common.printValueFromDict(common.MAIN_KCL_TYPES, collisionType)
+    collisionVariant = common.ReadS32(vehiclePtr + 0xD20)
+    print(f"collisionVariant: {hex(collisionVariant)}")
+    roadIsTrickable = common.ReadU8(vehiclePtr + 0xFE8)
+    print(f"roadIsTrickable: {'TRUE' if roadIsTrickable else 'FALSE'}")
+    field_0xD1C = common.ReadS32(vehiclePtr + 0xD1C)
+    print(f"field_0xD1C: {hex(field_0xD1C)}")
+
     slipStreamTime = common.ReadS32(vehiclePtr + 0xFD8)
     print(f"slipStreamTime: {slipStreamTime}")
-
     currentDashType = common.ReadS32(vehiclePtr + 0xF98)
     print(f"currentDashType: {currentDashType}")
     currentDashDuration = common.ReadS32(vehiclePtr + 0xF9C)
@@ -51,6 +63,56 @@ def PrintVehicleInfo(playerIdx):
     print(f"boostSpeed: {boostSpeed:.5f}")
     dashAcceleration = common.ReadF32(vehiclePtr + 0xFC4)
     print(f"dashAcceleration: {dashAcceleration:.5f}")
+    miniturboCharge = common.ReadF32(vehiclePtr + 0xF08)
+    print(f"miniturboCharge: {miniturboCharge:.5f}")
+
+    field143_0xde8 = common.ReadF32(vehiclePtr + 0xDE8)
+    print(f"field143_0xde8: {field143_0xde8:.5f}")
+    field191_0xeb4 = common.ReadF32(vehiclePtr + 0xEB4)
+    print(f"field191_0xeb4: {field191_0xeb4:.5f}")
+    field172_0xe74 = common.ReadF32(vehiclePtr + 0xE74)
+    print(f"field172_0xe74: {field172_0xe74:.5f}")
+
+    driftTypeFlags = common.ReadU32(vehiclePtr + 0xEF4)
+    print(f"driftTypeFlags: {hex(driftTypeFlags)}")
+    driftSteering = common.ReadF32(vehiclePtr + 0xEF8)
+    print(f"driftSteering: {driftSteering:.5f}")
+    driftSteeringRatio = common.ReadF32(vehiclePtr + 0xEFC)
+    print(f"driftSteeringRatio: {driftSteeringRatio:.5f}")
+    prevDriftSteering = common.ReadF32(vehiclePtr + 0xF00)
+    print(f"prevDriftSteering: {prevDriftSteering:.5f}")
+
+    killerEndRatio = common.ReadF32(vehiclePtr + 0x1024)
+    print(f"killerEndRatio: {killerEndRatio:.5f}")
+    invincibilityFrames = common.ReadS32(vehiclePtr + 0x102C)
+    print(f"invincibilityFrames: {invincibilityFrames}")
+    autoDriftCharge = common.ReadF32(vehiclePtr + 0x1034)
+    print(f"autoDriftCharge: {autoDriftCharge:.5f}")
+
+    yawStrength = common.ReadF32(vehiclePtr + 0xF24)
+    print(f"yawStrength: {yawStrength:.5f}")
+    turningSpeed = common.ReadF32(vehiclePtr + 0xF28)
+    print(f"turningSpeed: {turningSpeed:.5f}")
+
+    ### VehicleReact ###
+    field_0x1214 = common.ReadVector3(vehiclePtr + 0x1214)
+    print(f"field_0x1214 = {field_0x1214}")
+    field_0x1220 = common.ReadF32(vehiclePtr + 0x1220)
+    print(f"field_0x1220: {field_0x1220:.5f}")
+    field_0x1224 = common.ReadF32(vehiclePtr + 0x1224)
+    print(f"field_0x1224: {field_0x1224:.5f}")
+    field_0x1228 = common.ReadVector3(vehiclePtr + 0x1228)
+    print(f"field_0x1228 = {field_0x1228}")
+    field_0x1234 = common.ReadF32(vehiclePtr + 0x1234)
+    print(f"field_0x1234: {field_0x1234:.5f}")
+    field_0x1238 = common.ReadS32(vehiclePtr + 0x1238)
+    print(f"field_0x1238: {field_0x1238}")
+
+    ### Vehicle ###
+    respawnPointId = common.ReadS32(vehiclePtr + 0x1240)
+    print(f"respawnPointId: {respawnPointId}")
+    respawnFrames = common.ReadS32(vehiclePtr + 0x1244)
+    print(f"respawnFrames: {respawnFrames}")
 
 # Runs once at script boot
 def mainInit():

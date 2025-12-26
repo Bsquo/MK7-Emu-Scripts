@@ -33,6 +33,41 @@ CHARACTER_ENGINE_COLLECTION_OFFSETS = {
     "Trophy3DModelManager": 0x54
 }
 
+MAIN_KCL_TYPES = {
+    "ROAD": 0,
+    "ROAD2": 1,
+    "ROAD3": 2,
+    "SAND": 3,
+    "LDIRT": 4,
+    "DIRT": 5,
+    "HDIRT": 6,
+    "ICE": 7,
+    "DASH": 8,
+    "GLIDE": 9,
+    "ITROAD": 10,
+    "RESQ": 11,
+    "PULL": 12,
+    "LAROAD": 13,
+    "BELT": 14,
+    "DUMMY0": 15,
+    "WALL": 16,
+    "WALL2": 17,
+    "OUTF": 18,
+    "ITWALL": 19,
+    "LWALL": 20,
+    "BWALL": 21,
+    "OUTMH": 22,
+    "DUMMY1": 23,
+    "DUMMY2": 24,
+    "VALLEY": 25,
+    "TRIGGER": 26,
+    "SOUND": 27,
+    "CANNON": 28,
+    "VALLEY2": 29,
+    "DUMMY3": 30,
+    "ZONE": 31
+}
+
 VERSIONS = {
     "chn_dlp": 0,
     "chn_rev1": 1,
@@ -72,8 +107,32 @@ def setRootSystemInstance(address):
     ROOTSYSTEM_INSTANCE = address
 
 ROOTSYSTEM_ADDRESSES = {
-    2:  0x005f7dc4,  # eur_dlp
-    24: 0x006789b8  # usa_rev1
+    0:   0x005F4E98,  # chn_dlp
+    1:   0x0065AE98,  # chn_rev1
+    2:   0x005F7DC4,  # eur_dlp
+    3:   0x00655FB0,  # eur_kiosk
+    4:   0x0065CFA8,  # eur_rev0
+    5:   0x0065CE98,  # eur_rev0_v11
+    6:   0x006789B8,  # eur_rev1
+    7:   0x006789B8,  # eur_rev2
+    8:   0x005F7DC4,  # jpn_dlp
+    9:   0x00655FB0,  # jpn_kiosk
+    10:  0x0065CFA8,  # jpn_rev0
+    11:  0x0065CE98,  # jpn_rev0_v11
+    12:  0x0065CE98,  # jpn_rev1
+    13:  0x0065CE98,  # jpn_rev2
+    14:  0x005F4E98,  # kor_dlp
+    15:  0x0065CE98,  # kor_rev1
+    16:  0x0065CE98,  # kor_rev2
+    17:  0x005F4E98,  # twn_dlp
+    18:  0x0065CE98,  # twn_rev1
+    19:  0x0065CE98,  # twn_rev2
+    20:  0x005F7DC4,  # usa_dlp
+    21:  0x00655FB0,  # usa_kiosk
+    22:  0x0065CFA8,  # usa_rev0
+    23:  0x0065CE98,  # usa_rev0_v11
+    24:  0x006789B8,  # usa_rev1
+    25:  0x006789B8   # usa_rev2
 }
 
 # Call this function on `mainInit()` inside each script with the appropiate game version
@@ -203,3 +262,8 @@ def clear():
 
 def wait(seconds):
     time.sleep(seconds)
+
+def printValueFromDict(dict, num):
+    for key, value in dict.items():
+        if value == num:
+            print(f"{key} (0x{value:X})")
