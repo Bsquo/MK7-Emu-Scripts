@@ -1,6 +1,5 @@
 import common
 import sys
-import math
 
 def PrintVehicleInfo(playerIdx):
     vehiclePtr = common.GetVehicle(playerIdx)
