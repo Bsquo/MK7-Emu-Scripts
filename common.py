@@ -135,6 +135,24 @@ ROOTSYSTEM_ADDRESSES = {
     25:  0x006789B8   # usa_rev2
 }
 
+# Global addresses
+PLAYER_CURRENT_COLL_INFO_PTR = 0
+def getPlayerCurrentCollInfoPtr():
+    return PLAYER_CURRENT_COLL_INFO_PTR
+
+def setPlayerCurrentCollInfoPtr(address):
+    global PLAYER_CURRENT_COLL_INFO_PTR
+    PLAYER_CURRENT_COLL_INFO_PTR = address
+
+def getPlayerCurrentCollInfo():
+    return GetAddress(getPlayerCurrentCollInfoPtr())
+
+PLAYER_CURRENT_COLL_INFO_PTR_ADDRESS = {
+    2:   0x005e080c,  # eur_dlp
+    24:  0x0065c584,  # usa_rev1
+    25:  0x0065C584   # usa_rev2
+}
+
 # Call this function on `mainInit()` inside each script with the appropiate game version
 # passed through arguments (expected to be a  representing the number)
 # (see the `VERSIONS` dict for all possible values)
@@ -144,6 +162,7 @@ def setupAddresses(gameVersion):
         return -1
 
     setRootSystemInstance(ROOTSYSTEM_ADDRESSES.get(gameVersion, 0))
+    setPlayerCurrentCollInfoPtr(PLAYER_CURRENT_COLL_INFO_PTR_ADDRESS.get(gameVersion, 0))
 
     return 0
 

@@ -33,6 +33,13 @@ def PrintVehicleInfo(playerIdx):
     currentVehicleMaxSpeed2 = common.ReadF32(vehiclePtr + 0xF88)
     print(f"currentVehicleMaxSpeed2: {currentVehicleMaxSpeed2:.5f}")
 
+    statusFlags = common.ReadU32(vehiclePtr + 0xC30)
+    print(f"statusFlags: {hex(statusFlags)}")
+    flags3 = common.ReadU32(vehiclePtr + 0xC38)
+    print(f"flags3: {hex(flags3)}")
+    field29_0xc94 = common.ReadU32(vehiclePtr + 0xC94)
+    print(f"field29_0xc94: {hex(field29_0xc94)}")
+
     field131_0xd98 = common.ReadF32(vehiclePtr + 0xD98)
     print(f"field131_0xd98: {field131_0xd98:.5f}")
     field181_0xe8c = common.ReadF32(vehiclePtr + 0xE8C)
@@ -42,15 +49,20 @@ def PrintVehicleInfo(playerIdx):
     field258_0xfd4 = common.ReadF32(vehiclePtr + 0xFD4)
     print(f"field258_0xfd4: {field258_0xfd4:.5f}")
 
-    collisionType = common.ReadS32(vehiclePtr + 0xD14)
-    print("collisionType: ")
-    common.printValueFromDict(common.MAIN_KCL_TYPES, collisionType)
-    collisionVariant = common.ReadS32(vehiclePtr + 0xD20)
-    print(f"collisionVariant: {hex(collisionVariant)}")
+    roadCollisionType = common.ReadS32(vehiclePtr + 0xD14)
+    common.printValueFromDict(common.MAIN_KCL_TYPES, roadCollisionType)
+    roadCollisionVariant = common.ReadS32(vehiclePtr + 0xD20)
+    print(f"roadCollisionVariant: {hex(roadCollisionVariant)}")
+    wallCollisionType = common.ReadS32(vehiclePtr + 0xD30)
+    common.printValueFromDict(common.MAIN_KCL_TYPES, wallCollisionType)
+    wallCollisionVariant = common.ReadS32(vehiclePtr + 0xD34)
+    print(f"wallCollisionVariant: {hex(wallCollisionVariant)}")
     roadIsTrickable = common.ReadU8(vehiclePtr + 0xFE8)
     print(f"roadIsTrickable: {'TRUE' if roadIsTrickable else 'FALSE'}")
     field_0xD1C = common.ReadS32(vehiclePtr + 0xD1C)
     print(f"field_0xD1C: {hex(field_0xD1C)}")
+    field_0x1044 = common.ReadS32(vehiclePtr + 0x1044)
+    print(f"field_0x1044: {hex(field_0x1044)}")
 
     slipStreamTime = common.ReadS32(vehiclePtr + 0xFD8)
     print(f"slipStreamTime: {slipStreamTime}")
@@ -106,6 +118,10 @@ def PrintVehicleInfo(playerIdx):
     print(f"field_0x1234: {field_0x1234:.5f}")
     field_0x1238 = common.ReadS32(vehiclePtr + 0x1238)
     print(f"field_0x1238: {field_0x1238}")
+
+    ### VehicleControlAI ###
+    field16_0xc20 = common.ReadF32(vehiclePtr + 0xC20)
+    print(f"field16_0xc20 = {field16_0xc20:.5f}")
 
     ### Vehicle ###
     respawnPointId = common.ReadS32(vehiclePtr + 0x1240)
