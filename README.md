@@ -52,5 +52,6 @@ python CRaceInfo.py 24
 * `CRaceInfo.py`: Prints global information and parameters for the current race.
 * `LapRankChecker.py`: Prints information on your player's "lap rank" checking information, including variables such as the current checkpoint ID, lap completion, etc.
 * `Vehicle.py`: Prints your vehicle's information (such as the speed, position, etc).
+* `VehicleCurrentCollisionInfo.py`: Prints information on the collision polygon your vehicle is currently on, such as the polygon's raw KCL flags.
 
 NOTE: `common.py` is a helper script containing code and data used by the scripts above. This script isn't meant to be executed by the user.
