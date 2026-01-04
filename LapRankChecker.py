@@ -35,8 +35,8 @@ def PrintKartInfo(kartInfo, base_idx):
     #print(f" field8_0x12 = 0x{field8_0x12:02X}, field9_0x13 = 0x{field9_0x13:02X}")
     print(f" currentRaceCompletion = {currentRaceCompletion}, maxRaceCompletion = {maxRaceCompletion}")
     print(f" currentLap = {currentLap + 1}, kartGridRank = {kartGridRank}, flags = {hex(flags)}")
-    print(f" currentPosition = {currentPosition}")
-    print(f" previousPosition = {previousPosition}")
+    print(f" currentPosition = ({currentPosition.x}, {currentPosition.y}, {currentPosition.z})")
+    print(f" previousPosition = ({previousPosition.x}, {previousPosition.y}, {previousPosition.z})")
     print(f" field17_0x40 = {field17_0x40}")
     #print(f" field18_0x41 = 0x{field18_0x41:02X}, field19_0x42 = 0x{field19_0x42:02X}, field20_0x43 = 0x{field20_0x43:02X}")
 

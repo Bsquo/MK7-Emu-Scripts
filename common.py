@@ -219,16 +219,74 @@ def ReadS8(ptr):
 def GetAddress(ptr):
     return ReadU32(ptr)
 
+
+def WriteF32(ptr, f32):
+    bytes_to_write = struct.pack("<f", f32)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteF64(ptr, f64):
+    bytes_to_write = struct.pack("<d", f64)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteU64(ptr, u64):
+    bytes_to_write = struct.pack("<Q", u64)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteS64(ptr, s64):
+    bytes_to_write = struct.pack("<q", s64)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteS32(ptr, s32):
+    bytes_to_write = struct.pack("<i", s32)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteU32(ptr, u32):
+    bytes_to_write = struct.pack("<I", u32)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteU16(ptr, u16):
+    bytes_to_write = struct.pack("<H", u16)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteS16(ptr, s16):
+    bytes_to_write = struct.pack("<h", s16)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteU8(ptr, u8):
+    bytes_to_write = struct.pack("<B", u8)
+    citra.write_memory(ptr, bytes_to_write)
+
+def WriteS8(ptr, s8):
+    bytes_to_write = struct.pack("<b", s8)
+    citra.write_memory(ptr, bytes_to_write)
+
+
+class Vector3:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+class Vector2:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
 def ReadVector3(ptr):
     x = ReadF32(ptr + 0x00)
     y = ReadF32(ptr + 0x04)
     z = ReadF32(ptr + 0x08)
-    return (x, y, z)
+    return Vector3(x, y, z)
 
 def ReadVector2(ptr):
     x = ReadF32(ptr + 0x00)
     y = ReadF32(ptr + 0x04)
-    return (x, y)
+    return Vector2(x, y)
+
+def ReadVector2_s8(ptr):
+    x = ReadS8(ptr + 0x00)
+    y = ReadS8(ptr + 0x01)
+    return Vector2(x, y)
 
 ######################################
 
@@ -269,9 +327,15 @@ def GetKartInfoForPlayer(playerIdx):
     arrayOffset = playerIdx * 0x44
     return GetKartInfoArrayPtr(GetLapRankChecker()) + arrayOffset
 
+def GetKartUnit(playerIdx):
+    unitList = GetAddress(GetCharacterEngineDirector("KartDirector") + 0x2C)
+    return GetAddress(unitList + (playerIdx * 0x04))
+
 def GetVehicle(playerIdx):
-    infoProxy = GetAddress(GetKartInfoForPlayer(playerIdx) + 0x00)
-    return GetAddress(infoProxy + 0x00)
+    return GetAddress(GetKartUnit(playerIdx) + 0x2C)
+
+def GetFramesSinceCountdown():
+    return GetAddress(GetCharacterEngineDirector("KartDirector") + 0x198)
 
 ##############################
 

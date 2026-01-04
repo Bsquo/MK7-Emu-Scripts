@@ -1,5 +1,6 @@
 import common
 import sys
+import math
 
 def PrintVehicleInfo(playerIdx):
     vehiclePtr = common.GetVehicle(playerIdx)
@@ -9,12 +10,22 @@ def PrintVehicleInfo(playerIdx):
 
     print(f"[+] Vehicle {playerIdx} @ 0x{vehiclePtr:08X}")
 
+    print(f"Frames since countdown = {common.GetFramesSinceCountdown()}")
+
     ### Rigid ###
     positionPtr = common.GetAddress(vehiclePtr + 0x34)
     position = common.ReadVector3(positionPtr)
-    print(f"currentPosition = {position}")
+    print(f"position = ({position.x}, {position.y}, {position.z})")
     velocity = common.ReadVector3(vehiclePtr + 0x38)
-    print(f" velocity = {velocity}")
+    print(f"velocity = ({velocity.x}, {velocity.y}, {velocity.z})")
+    magnitude = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
+    print(f"Velocity magnitude = {magnitude:.2f}")
+
+    ### VehicleControl ###
+    stickX = common.ReadF32(vehiclePtr + 0x100)
+    print(f"stickX: {stickX:.5f}")
+    stickY = common.ReadF32(vehiclePtr + 0x108)
+    print(f"stickY: {stickY:.5f}")
 
     ### VehicleMove ###
     speed = common.ReadF32(vehiclePtr + 0xF2C)
@@ -23,31 +34,36 @@ def PrintVehicleInfo(playerIdx):
 
     speedRatio = common.ReadF32(vehiclePtr + 0xF30)
     print(f"speedRatio: {speedRatio:.5f}")
-    speedRatio2 = common.ReadF32(vehiclePtr + 0xF34)
-    print(f"speedRatio2: {speedRatio2:.5f}")
     speedRatio3 = common.ReadF32(vehiclePtr + 0xF38)
     print(f"speedRatio3: {speedRatio3:.5f}")
 
-    currentVehicleMaxSpeed = common.ReadF32(vehiclePtr + 0xF80)
+    currentVehicleMaxSpeedBase = common.ReadF32(vehiclePtr + 0xF80)
+    print(f"currentVehicleMaxSpeedBase: {currentVehicleMaxSpeedBase:.5f}")
+    currentVehicleMaxSpeed = common.ReadF32(vehiclePtr + 0xF88)
     print(f"currentVehicleMaxSpeed: {currentVehicleMaxSpeed:.5f}")
-    currentVehicleMaxSpeed2 = common.ReadF32(vehiclePtr + 0xF88)
-    print(f"currentVehicleMaxSpeed2: {currentVehicleMaxSpeed2:.5f}")
 
     statusFlags = common.ReadU32(vehiclePtr + 0xC30)
-    print(f"statusFlags: {hex(statusFlags)}")
+    print(f"statusFlags: {statusFlags:08X}")
     flags3 = common.ReadU32(vehiclePtr + 0xC38)
-    print(f"flags3: {hex(flags3)}")
+    print(f"flags3: {flags3:08X}")
     field29_0xc94 = common.ReadU32(vehiclePtr + 0xC94)
-    print(f"field29_0xc94: {hex(field29_0xc94)}")
+    print(f"field29_0xc94: {field29_0xc94:08X}")
 
-    field131_0xd98 = common.ReadF32(vehiclePtr + 0xD98)
-    print(f"field131_0xd98: {field131_0xd98:.5f}")
-    field181_0xe8c = common.ReadF32(vehiclePtr + 0xE8C)
-    print(f"field181_0xe8c: {field181_0xe8c:.5f}")
-    field257_0xfd0 = common.ReadF32(vehiclePtr + 0xFD0)
-    print(f"field257_0xfd0: {field257_0xfd0:.5f}")
-    field258_0xfd4 = common.ReadF32(vehiclePtr + 0xFD4)
-    print(f"field258_0xfd4: {field258_0xfd4:.5f}")
+    field292_0x1064 = common.ReadF32(vehiclePtr + 0x1064)
+    print(f"field292_0x1064: {field292_0x1064:.5f}")
+
+    airtime = common.ReadS32(vehiclePtr + 0xD48)
+    print(f"airtime: {airtime}")
+    #airtimeOver20Percentage = common.ReadF32(vehiclePtr + 0xD98)
+    #print(f"airtimeOver20Percentage: {airtimeOver20Percentage:.5f}")
+    airtimeUnderwater = common.ReadS32(vehiclePtr + 0xD4C)
+    print(f"airtimeUnderwater: {airtimeUnderwater}")
+    #airtimeOver20UnderwaterPercentage = common.ReadF32(vehiclePtr + 0xD9C)
+    #print(f"airtimeOver20UnderwaterPercentage: {airtimeOver20UnderwaterPercentage:.5f}")
+    #onGroundUnderwaterPercentage = common.ReadF32(vehiclePtr + 0xDA0)
+    #print(f"onGroundUnderwaterPercentage: {onGroundUnderwaterPercentage:.5f}")
+    #field181_0xda4 = common.ReadF32(vehiclePtr + 0xDA4)
+    #print(f"field181_0xda4: {field181_0xda4:.5f}")
 
     roadCollisionType = common.ReadS32(vehiclePtr + 0xD14)
     common.printValueFromDict(common.MAIN_KCL_TYPES, roadCollisionType)
@@ -85,7 +101,7 @@ def PrintVehicleInfo(playerIdx):
     print(f"field172_0xe74: {field172_0xe74:.5f}")
 
     driftTypeFlags = common.ReadU32(vehiclePtr + 0xEF4)
-    print(f"driftTypeFlags: {hex(driftTypeFlags)}")
+    print(f"driftTypeFlags: {driftTypeFlags:08X}")
     driftSteering = common.ReadF32(vehiclePtr + 0xEF8)
     print(f"driftSteering: {driftSteering:.5f}")
     driftSteeringRatio = common.ReadF32(vehiclePtr + 0xEFC)
@@ -107,13 +123,13 @@ def PrintVehicleInfo(playerIdx):
 
     ### VehicleReact ###
     field_0x1214 = common.ReadVector3(vehiclePtr + 0x1214)
-    print(f"field_0x1214 = {field_0x1214}")
+    print(f"field_0x1214 = ({field_0x1214.x}, {field_0x1214.y}, {field_0x1214.z})")
     field_0x1220 = common.ReadF32(vehiclePtr + 0x1220)
     print(f"field_0x1220: {field_0x1220:.5f}")
     field_0x1224 = common.ReadF32(vehiclePtr + 0x1224)
     print(f"field_0x1224: {field_0x1224:.5f}")
     field_0x1228 = common.ReadVector3(vehiclePtr + 0x1228)
-    print(f"field_0x1228 = {field_0x1228}")
+    print(f"field_0x1228 = ({field_0x1228.x}, {field_0x1228.y}, {field_0x1228.z})")
     field_0x1234 = common.ReadF32(vehiclePtr + 0x1234)
     print(f"field_0x1234: {field_0x1234:.5f}")
     field_0x1238 = common.ReadS32(vehiclePtr + 0x1238)
@@ -131,13 +147,11 @@ def PrintVehicleInfo(playerIdx):
 
 # Runs once at script boot
 def mainInit():
-    if len(sys.argv) < 2:
-        print("Usage: python script_name.py <gameVersion>")
+    if len(sys.argv) < 3:
+        print("Usage: python script_name.py <gameVersion> <playerId>")
         sys.exit(1)
 
-    gameVersion = sys.argv[1]
-
-    if common.setupAddresses(gameVersion) == -1:
+    if common.setupAddresses(int(sys.argv[1])) == -1:
         print("Invalid game version")
         sys.exit(1)
 
@@ -147,8 +161,9 @@ def mainInit():
 def mainLoop():
     common.clear()
 
-    # Print the first player's vehicle info (0)
-    PrintVehicleInfo(0)
+    # Second argument is the playerId
+    playerId = int(sys.argv[2])
+    PrintVehicleInfo(playerId)
 
     common.wait(0.2)
 
