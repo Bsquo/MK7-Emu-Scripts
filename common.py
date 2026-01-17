@@ -290,7 +290,13 @@ def ReadVector2_s8(ptr):
 
 ######################################
 
-def RootSystem_GetEngine(engineType):
+def RootSystem_GetEngineFromRootScene(engineType):
+    engineType = ENGINE_TYPE[engineType]
+
+    rootScene = GetAddress(getRootSystemInstance() + 0x10)
+    return GetAddress(rootScene + 0x1E4 + (engineType * 0x0C)) ^ ENGINE_XOR_KEY
+	
+def RootSystem_GetEngineFromSceneManager(engineType):
     engineType = ENGINE_TYPE[engineType]
     
     sceneManager = GetAddress(getRootSystemInstance() + 0x04)
@@ -300,9 +306,12 @@ def RootSystem_GetEngine(engineType):
 def GetCharacterEngineDirector(collectionOffset):
     collectionOffset = CHARACTER_ENGINE_COLLECTION_OFFSETS[collectionOffset]
 
-    characterEngine = RootSystem_GetEngine("CharacterEngine")
+    characterEngine = RootSystem_GetEngineFromSceneManager("CharacterEngine")
     characterEngineCollection = GetAddress(characterEngine + 0x1C)
     return GetAddress(characterEngineCollection + collectionOffset)
+
+def GetDashSequenceEngine():
+    return RootSystem_GetEngineFromRootScene("SequenceEngine")
 
 def GetModeManager():
     return GetAddress(GetCharacterEngineDirector("RaceDirector") + 0x1BC)
@@ -337,6 +346,9 @@ def GetVehicle(playerIdx):
 def GetFramesSinceCountdown():
     return GetAddress(GetCharacterEngineDirector("KartDirector") + 0x198)
 
+def GetAIManager():
+    return GetAddress(GetCharacterEngineDirector("KartDirector") + 0x58)
+
 ##############################
 
 # Clear the screen
@@ -350,3 +362,18 @@ def printValueFromDict(dict, num):
     for key, value in dict.items():
         if value == num:
             print(f"{key} (0x{value:X})")
+
+def printBitMask(flag, bitmasks):
+    output = ""
+    for mask, letter in bitmasks.items():
+        if flag & mask:
+            output += letter
+        else:
+            output += " "
+
+    known_mask = sum(bitmasks.keys())
+    unknown_bits = flag & ~known_mask
+    if unknown_bits:
+        output += f" ({hex(unknown_bits)})"
+
+    print(f"{output} ({flag:04X})")

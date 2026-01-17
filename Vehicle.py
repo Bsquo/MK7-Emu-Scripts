@@ -31,11 +31,12 @@ def PrintVehicleInfo(playerIdx):
     speed = common.ReadF32(vehiclePtr + 0xF2C)
     #speed *= 10
     print(f"Speed: {speed:.5f}")
-
     speedRatio = common.ReadF32(vehiclePtr + 0xF30)
     print(f"speedRatio: {speedRatio:.5f}")
-    speedRatio3 = common.ReadF32(vehiclePtr + 0xF38)
-    print(f"speedRatio3: {speedRatio3:.5f}")
+    field13_0xc78 = common.ReadF32(vehiclePtr + 0xC78)
+    print(f"field13_0xc78: {field13_0xc78:.5f}")
+    field14_0xc7c = common.ReadF32(vehiclePtr + 0xC7C)
+    print(f"field14_0xc7c: {field14_0xc7c:.5f}")
 
     currentVehicleMaxSpeedBase = common.ReadF32(vehiclePtr + 0xF80)
     print(f"currentVehicleMaxSpeedBase: {currentVehicleMaxSpeedBase:.5f}")
@@ -46,6 +47,8 @@ def PrintVehicleInfo(playerIdx):
     print(f"statusFlags: {statusFlags:08X}")
     flags3 = common.ReadU32(vehiclePtr + 0xC38)
     print(f"flags3: {flags3:08X}")
+    field203_0xeec = common.ReadF32(vehiclePtr + 0xEEC)
+    print(f"field203_0xeec: {field203_0xeec:.5f}")
     field29_0xc94 = common.ReadU32(vehiclePtr + 0xC94)
     print(f"field29_0xc94: {field29_0xc94:08X}")
 
