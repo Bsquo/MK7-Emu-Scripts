@@ -49,8 +49,12 @@ python CRaceInfo.py 24
 ```
 
 # Scripts
+* `AIManager.py`: Prints information related to the CPU players.
 * `CRaceInfo.py`: Prints global information and parameters for the current race.
+* `DashSequenceEngine.py`: Prints information on the `DashSequenceEngine` class.
+* `KDPad.py`: Prints information on controller-related variables.
 * `LapRankChecker.py`: Prints information on your player's "lap rank" checking information, including variables such as the current checkpoint ID, lap completion, etc.
+* `LogRecorder.py`: Prints information on the `LogRecorder` class. More specifically, it prints information on the variables used in the hidden score calculation that's used for determining the star rank in Grand Prix.
 * `Vehicle.py`: Prints your vehicle's information (such as the speed, position, etc).
 * `VehicleCurrentCollisionInfo.py`: Prints information on the collision polygon your vehicle is currently on, such as the polygon's raw KCL flags.
 

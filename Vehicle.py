@@ -69,11 +69,11 @@ def PrintVehicleInfo(playerIdx):
     #print(f"field181_0xda4: {field181_0xda4:.5f}")
 
     roadCollisionType = common.ReadS32(vehiclePtr + 0xD14)
-    common.printValueFromDict(common.MAIN_KCL_TYPES, roadCollisionType)
+    print(f"roadCollisionType: {common.getStringFromValueAndDict(common.MAIN_KCL_TYPES, roadCollisionType)}")
     roadCollisionVariant = common.ReadS32(vehiclePtr + 0xD20)
     print(f"roadCollisionVariant: {hex(roadCollisionVariant)}")
     wallCollisionType = common.ReadS32(vehiclePtr + 0xD30)
-    common.printValueFromDict(common.MAIN_KCL_TYPES, wallCollisionType)
+    print(f"wallCollisionType: {common.getStringFromValueAndDict(common.MAIN_KCL_TYPES, wallCollisionType)}")
     wallCollisionVariant = common.ReadS32(vehiclePtr + 0xD34)
     print(f"wallCollisionVariant: {hex(wallCollisionVariant)}")
     roadIsTrickable = common.ReadU8(vehiclePtr + 0xFE8)
@@ -102,6 +102,13 @@ def PrintVehicleInfo(playerIdx):
     print(f"field191_0xeb4: {field191_0xeb4:.5f}")
     field172_0xe74 = common.ReadF32(vehiclePtr + 0xE74)
     print(f"field172_0xe74: {field172_0xe74:.5f}")
+
+    field108_0xd3c = common.ReadF32(vehiclePtr + 0xD3C)
+    print(f"field108_0xd3c: {field108_0xd3c:.5f}")
+    field109_0xd40 = common.ReadF32(vehiclePtr + 0xD40)
+    print(f"field109_0xd40: {field109_0xd40:.5f}")
+    field110_0xd44 = common.ReadF32(vehiclePtr + 0xD44)
+    print(f"field110_0xd44: {field110_0xd44:.5f}")
 
     driftTypeFlags = common.ReadU32(vehiclePtr + 0xEF4)
     print(f"driftTypeFlags: {driftTypeFlags:08X}")
@@ -147,6 +154,8 @@ def PrintVehicleInfo(playerIdx):
     print(f"respawnPointId: {respawnPointId}")
     respawnFrames = common.ReadS32(vehiclePtr + 0x1244)
     print(f"respawnFrames: {respawnFrames}")
+    startBoostTimer = common.ReadF32(vehiclePtr + 0x125C)
+    print(f"startBoostTimer: {startBoostTimer:.5f}")
 
 # Runs once at script boot
 def mainInit():

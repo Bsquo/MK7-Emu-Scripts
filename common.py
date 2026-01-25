@@ -68,6 +68,51 @@ MAIN_KCL_TYPES = {
     "ZONE": 31
 }
 
+GRAND_PRIX_RECORDS = {
+    "NO RANK": 0,
+    "1 STAR":  4,
+    "2 STARS": 5,
+    "3 STARS": 6
+}
+
+ITEM_TYPES = {
+    "GREEN SHELL": 0,
+    "RED SHELL": 1,
+    "BANANA": 2,
+    "MUSHROOM": 3,
+    "STAR": 4,
+    "BLUE SHELL": 5,
+    "LIGHTNING": 6,
+    "FAKE ITEM BOX (UNUSED)": 7,
+    "GOLDEN MUSHROOM": 8,
+    "BOB OMB": 9,
+    "BLOOPER": 10,
+    "MEGA MUSHROOM (UNUSED)": 11,
+    "BULLET BILL": 12,
+    "FIRE FLOWER": 13,
+    "TANOOKI LEAF": 14,
+    "LUCKY SEVEN": 15
+}
+
+ITEM_TYPES_FOR_LOG_RECORDER = {
+    "GREEN SHELL": 0,
+    "1": 1,
+    "RED SHELL": 2,
+    "3": 3,
+    "BANANA": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "STAR": 8,
+    "9": 9,
+    "BLUE_SHELL": 10,
+    "11": 11,
+    "LIGHTNING": 12,
+    "13": 13,
+    "14": 14,
+    "15": 15
+}
+
 VERSIONS = {
     "chn_dlp": 0,
     "chn_rev1": 1,
@@ -260,6 +305,10 @@ def WriteS8(ptr, s8):
     bytes_to_write = struct.pack("<b", s8)
     citra.write_memory(ptr, bytes_to_write)
 
+def GetS16FromSeadBuffer(seadBuffer, index):
+    valuePtr = GetAddress(seadBuffer + 0x04)
+    return ReadS16(valuePtr + index * 2)
+
 
 class Vector3:
     def __init__(self, x, y, z):
@@ -313,8 +362,14 @@ def GetCharacterEngineDirector(collectionOffset):
 def GetDashSequenceEngine():
     return RootSystem_GetEngineFromRootScene("SequenceEngine")
 
+def GetMenuData():
+    return GetAddress(GetDashSequenceEngine() + 0xC0)
+
 def GetModeManager():
     return GetAddress(GetCharacterEngineDirector("RaceDirector") + 0x1BC)
+
+def GetLogRecorder():
+    return GetAddress(GetCharacterEngineDirector("RaceDirector") + 0x1C0)
 
 # Returns a pointer to the current's "CRaceInfo"
 def GetRaceInfo():
@@ -358,10 +413,12 @@ def clear():
 def wait(seconds):
     time.sleep(seconds)
 
-def printValueFromDict(dict, num):
-    for key, value in dict.items():
+def getStringFromValueAndDict(d, num):
+    for key, value in d.items():
         if value == num:
-            print(f"{key} (0x{value:X})")
+            return f"{key} (0x{value:X})"
+    return ""
+
 
 def printBitMask(flag, bitmasks):
     output = ""
