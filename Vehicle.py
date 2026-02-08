@@ -17,9 +17,9 @@ def PrintVehicleInfo(playerIdx):
     position = common.ReadVector3(positionPtr)
     print(f"position = ({position.x}, {position.y}, {position.z})")
     velocity = common.ReadVector3(vehiclePtr + 0x38)
-    print(f"velocity = ({velocity.x}, {velocity.y}, {velocity.z})")
+    #print(f"velocity = ({velocity.x}, {velocity.y}, {velocity.z})")
     magnitude = math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
-    print(f"Velocity magnitude = {magnitude:.2f}")
+    print(f"Velocity (magnitude) = {magnitude:.2f}")
 
     ### VehicleControl ###
     stickX = common.ReadF32(vehiclePtr + 0x100)
@@ -29,14 +29,21 @@ def PrintVehicleInfo(playerIdx):
 
     ### VehicleMove ###
     speed = common.ReadF32(vehiclePtr + 0xF2C)
-    #speed *= 10
-    print(f"Speed: {speed:.5f}")
+    print(f"speed: {speed:.5f}")
     speedRatio = common.ReadF32(vehiclePtr + 0xF30)
     print(f"speedRatio: {speedRatio:.5f}")
-    field13_0xc78 = common.ReadF32(vehiclePtr + 0xC78)
-    print(f"field13_0xc78: {field13_0xc78:.5f}")
-    field14_0xc7c = common.ReadF32(vehiclePtr + 0xC7C)
-    print(f"field14_0xc7c: {field14_0xc7c:.5f}")
+    externalSpeed = common.ReadF32(vehiclePtr + 0xC78)
+    print(f"externalSpeed: {externalSpeed:.5f}")
+    externalSpeedRatio = common.ReadF32(vehiclePtr + 0xC7C)
+    print(f"externalSpeedRatio: {externalSpeedRatio:.5f}")
+    field153_0xe38 = common.ReadF32(vehiclePtr + 0xE38)
+    print(f"field153_0xe38: {field153_0xe38:.5f}")
+    field182_0xeb0 = common.ReadF32(vehiclePtr + 0xEB0)
+    print(f"field182_0xeb0: {field182_0xeb0:.5f}")
+    field153_0xe3c = common.ReadF32(vehiclePtr + 0xE3C)
+    print(f"field153_0xe3c: {field153_0xe3c:.5f}")
+    field114_0xd64 = common.ReadF32(vehiclePtr + 0xD64)
+    print(f"field114_0xd64: {field114_0xd64:.5f}")
 
     currentVehicleMaxSpeedBase = common.ReadF32(vehiclePtr + 0xF80)
     print(f"currentVehicleMaxSpeedBase: {currentVehicleMaxSpeedBase:.5f}")
@@ -54,6 +61,9 @@ def PrintVehicleInfo(playerIdx):
 
     field292_0x1064 = common.ReadF32(vehiclePtr + 0x1064)
     print(f"field292_0x1064: {field292_0x1064:.5f}")
+
+    field_0xd3c = common.ReadF32(vehiclePtr + 0xd3c)
+    print(f"field_0xd3c: {field_0xd3c:.5f}")
 
     airtime = common.ReadS32(vehiclePtr + 0xD48)
     print(f"airtime: {airtime}")
@@ -95,13 +105,17 @@ def PrintVehicleInfo(playerIdx):
     print(f"dashAcceleration: {dashAcceleration:.5f}")
     miniturboCharge = common.ReadF32(vehiclePtr + 0xF08)
     print(f"miniturboCharge: {miniturboCharge:.5f}")
-
+    
+    field279_0x103c = common.ReadS32(vehiclePtr + 0x103C)
+    print(f"field279_0x103c: {field279_0x103c}")
     field143_0xde8 = common.ReadF32(vehiclePtr + 0xDE8)
     print(f"field143_0xde8: {field143_0xde8:.5f}")
     field191_0xeb4 = common.ReadF32(vehiclePtr + 0xEB4)
     print(f"field191_0xeb4: {field191_0xeb4:.5f}")
     field172_0xe74 = common.ReadF32(vehiclePtr + 0xE74)
     print(f"field172_0xe74: {field172_0xe74:.5f}")
+    field156_0xe44 = common.ReadS32(vehiclePtr + 0xE44)
+    print(f"field156_0xe44: {field156_0xe44}")
 
     field108_0xd3c = common.ReadF32(vehiclePtr + 0xD3C)
     print(f"field108_0xd3c: {field108_0xd3c:.5f}")
@@ -130,6 +144,9 @@ def PrintVehicleInfo(playerIdx):
     print(f"yawStrength: {yawStrength:.5f}")
     turningSpeed = common.ReadF32(vehiclePtr + 0xF28)
     print(f"turningSpeed: {turningSpeed:.5f}")
+
+    onGroundTimer = common.ReadS32(vehiclePtr + 0xD50)
+    print(f"onGroundTimer: {onGroundTimer}")
 
     ### VehicleReact ###
     field_0x1214 = common.ReadVector3(vehiclePtr + 0x1214)

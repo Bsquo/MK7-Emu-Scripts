@@ -40,6 +40,10 @@ def PrintSection(section):
     fadeDelay = common.ReadS32(section + 0x30)
     print(f"fadeDelay: {fadeDelay}")
 
+    # BasePage
+    onBackReturnCode = common.ReadS32(section + 0x5c)
+    print(f"onBackReturnCode: {onBackReturnCode}")
+
 def PrintSceneSequenceProxy(proxy):
     if proxy == 0:
         print("SceneSequenceProxy pointer is null.")
